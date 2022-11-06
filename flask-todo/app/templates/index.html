@@ -1,0 +1,42 @@
+{% include 'includes/header.html' %}
+
+<main class="flex-grow-1 container border rounded-4 bg-light my-5 p-5 shadow d-flex flex-column align-items-center">
+    <div class="text-primary fs-2 fw-bold d-flex">
+        <i class="material-icons display-6">task_alt</i>
+        To do list
+    </div>
+    <div class="mt-3 mb-5 w-75 border border-primary p-2 rounded-5">
+        <form action="/new" method="post" class="d-flex">
+            <input type="text" name="task_name" placeholder="New task..." class="form-control mx-2 rounded-5 border-0 bg-light">
+            <button class="btn btn-sm btn-primary rounded-circle mx-2 d-flex align-items-center"><i class="material-icons">add</i></button>
+        </form>
+    </div>
+    <div class="border-top border-dark w-75 p-4">
+        <table class="table">
+            {% for task in tasks %}
+            <tr>
+                {% if task.status == False %}
+                <td class="fs-5 px-5 text-primary">{{task.name}}</td>
+                {% else %}
+                <td class="fs-5 px-5 text-primary text-decoration-line-through">{{task.name}}</td>
+                {% endif %}
+
+                <td class="text-end">
+                    <a href="/update/{{task.id}}" class="rounded-circle mx-1 text-primary text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="top" title="Change Status">
+                        {% if task.status == False %}
+                        <i class="material-icons">radio_button_unchecked</i>
+                        {% else %}
+                        <i class="material-icons">check_circle_outline</i>
+                        {% endif %}
+                    </a>
+                    <a href="/delete/{{task.id}}" class="rounded-circle mx-1 text-danger text-decoration-none" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove Task">
+                        <i class="material-icons">remove_circle_outline</i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</main>
+
+{% include 'includes/footer.html' %}
